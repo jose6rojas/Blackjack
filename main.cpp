@@ -77,11 +77,237 @@ int main()
         deck.push_back("Q_Diamantes");
         deck.push_back("K_Diamantes");
 	
-	int r, v;
+	/* int r, v;
 	r = random(deck.size());
 	cout << r << endl;
 	v = valor(deck[r]);
-	cout << deck[r] << " = " << v << endl;
+	cout << deck[r] << " = " << v << endl; */
+	
+	int contJugador = 0;
+	int contCompu = 0;
+	
+	cout << "¡Bienvenido al Casino de Programacion III!" << endl;
+	cout << "Esperamos que este listo para perder dinero, perdon, ¡¡¡para divertirse!!!" << endl;
+	cout << "\n¿Cual es su nombre?: ";
+	string nombreJugador;
+	cin >> nombreJugador;
+	
+	int op_menu;
+	do
+	{
+		cout << "\nBlackjack [21]" << endl;
+		cout << "\t1. Jugar" << endl;
+		cout << "\t2. Ver Marcador" << endl;
+		cout << "\t3. Salir" << endl;
+		cout << "\t¿Que desea hacer, " << nombreJugador << '?' << endl;
+		cout << "\tEscoja una opcion: ";
+		cin >> op_menu;
+		if(op_menu == 1) // Jugar
+		{
+			if(deck.size() < 52)
+			{
+				deck.clear();
+				// Trebol, 0 - 12
+        			deck.push_back("A_Trebol");
+        			deck.push_back("2_Trebol");
+        			deck.push_back("3_Trebol");
+        			deck.push_back("4_Trebol");
+       				deck.push_back("5_Trebol");
+        			deck.push_back("6_Trebol");
+        			deck.push_back("7_Trebol");
+        			deck.push_back("8_Trebol");
+        			deck.push_back("9_Trebol");
+        			deck.push_back("10_Trebol");
+        			deck.push_back("J_Trebol");
+        			deck.push_back("Q_Trebol");
+        			deck.push_back("K_Trebol");
+        			// Corazones, 13 - 25
+        			deck.push_back("A_Corazones");
+        			deck.push_back("2_Corazones");
+        			deck.push_back("3_Corazones");
+        			deck.push_back("4_Corazones");
+        			deck.push_back("5_Corazones");
+        			deck.push_back("6_Corazones");
+        			deck.push_back("7_Corazones");
+        			deck.push_back("8_Corazones");
+        			deck.push_back("9_Corazones");
+        			deck.push_back("10_Corazones");
+        			deck.push_back("J_Corazones");
+        			deck.push_back("Q_Corazones");
+        			deck.push_back("K_Corazones");
+				// Espadas, 26 - 38
+        			deck.push_back("A_Espadas");
+        			deck.push_back("2_Espadas");
+        			deck.push_back("3_Espadas");
+        			deck.push_back("4_Espadas");
+        			deck.push_back("5_Espadas");
+        			deck.push_back("6_Espadas");
+        			deck.push_back("7_Espadas");
+        			deck.push_back("8_Espadas");
+        			deck.push_back("9_Espadas");
+        			deck.push_back("10_Espadas");
+        			deck.push_back("J_Espadas");
+        			deck.push_back("Q_Espadas");
+        			deck.push_back("K_Espadas");
+        			// Diamantes, 39 - 51
+        			deck.push_back("A_Diamantes");
+        			deck.push_back("2_Diamantes");
+        			deck.push_back("3_Diamantes");
+        			deck.push_back("4_Diamantes");
+        			deck.push_back("5_Diamantes");
+        			deck.push_back("6_Diamantes");
+        			deck.push_back("7_Diamantes");
+        			deck.push_back("8_Diamantes");
+        			deck.push_back("9_Diamantes");
+        			deck.push_back("10_Diamantes");
+        			deck.push_back("J_Diamantes");
+        			deck.push_back("Q_Diamantes");
+        			deck.push_back("K_Diamantes");
+			}
+			
+			int R; // numero aleatorio
+			
+			// Inicialmente, se le reparten 2 cartas al jugador y a la computadora
+			// Jugador
+        		int puntosJugador = 0;
+			vector<string> manoJugador;
+			
+			R = random(deck.size());
+			manoJugador.push_back(deck[R]); // Reparte la primera carta
+			deck.erase(deck.begin() + R); // Borra del deck la carta que acaba de ser repartida
+			
+			R = random(deck.size());
+			manoJugador.push_back(deck[R]); // Reparte la segunda carta
+			deck.erase(deck.begin() + R);
+			
+			for(int i = 0; i < manoJugador.size(); i++) // Obtiene la cantidad total de puntos del jugador
+				puntosJugador += valor(manoJugador[i]);
+			
+			bool A = false;
+			for(int i = 0; i < manoJugador.size(); i++) // Revisa si hay un A en la mano
+			{
+				if((manoJugador[i])[0] == 'A')
+				{
+					A = true;
+					break;
+				}
+			}
+			if(A && puntosJugador > 21) // Cambia el valor de A si esta se pasa de 21
+				puntosJugador = puntosJugador - 10;
+			
+			// Computadora
+        		vector<string> manoCompu;
+        		int puntosCompu = 0;
+			
+			/* R = random(deck.size());
+			manoCompu.push_back(deck[R]);
+			deck.erase(deck.begin() + R);
+			R = random(deck.size());
+			manoCompu.push_back(deck[R]);
+			deck.erase(deck.begin() + R); */
+			
+			if(puntosJugador < 21)
+			{
+				int op_jugador = 0;
+				while(op_jugador != 2)
+				{
+					if(puntosJugador < 21)
+					{
+						cout << endl;
+						for(int i = 0; i < manoJugador.size(); i++) // Muestra la mano del jugador
+							cout << manoJugador[i] << endl;
+						cout << "Puntos: " << puntosJugador << endl;
+						cout << "\n¿Desea seguir pidiendo cartas " << nombreJugador << '?' << endl;
+						cout << "1. Si\n2. No" << endl;
+						cout << "Escoja una opcion: ";
+						cin >> op_jugador;
+						if(op_jugador == 1) // Si
+						{
+							R = random(deck.size());
+							manoJugador.push_back(deck[R]);
+							deck.erase(deck.begin() + R);
+							
+							for(int i = 0; i < manoJugador.size(); i++)
+								puntosJugador += valor(manoJugador[i]);
+							
+							A = false;
+                        				for(int i = 0; i < manoJugador.size(); i++)
+                        				{
+                                				if((manoJugador[i])[0] == 'A')
+                                				{
+                                        				A = true;
+                                        				break;
+                                				}
+                        				}
+                        				if(A && puntosJugador > 21)
+                                				puntosJugador = puntosJugador - 10;
+						}
+						else if(op_jugador == 2) // No
+						{
+							if(puntosJugador < 21) // Turno de la computadora
+							{
+								/* R = random(deck.size());
+                        					manoCompu.push_back(deck[R]);
+                        					deck.erase(deck.begin() + R);
+								
+                        					R = random(deck.size());
+                        					manoCompu.push_back(deck[R]);
+                        					deck.erase(deck.begin() + R); */
+								
+								
+							}
+							else
+							{
+								cout << "\n¡Ha ganado la computadora!" << endl;
+                                				contCompu++;
+								cout << "Puntos de la computadora: " << puntosCompu << endl;
+                                                		cout << "Puntos de " << nombreJugador << ": " << puntosJugador << endl;
+								break;
+							}
+						}
+						else
+							cout << "\nDebe escoger una opcion valida." << endl;
+					}
+					else if(puntosJugador == 21)
+					{
+						cout << "\n¡Ha ganado " << nombreJugador << '!' << endl;
+						contJugador++;
+						cout << "Puntos de " << nombreJugador << ": " << puntosJugador << endl;
+                                		cout << "Puntos de la computadora: " << puntosCompu << endl;
+						break;
+					}
+					else
+					{
+						cout << "\n¡Ha ganado la computadora!" << endl;
+						contCompu++;
+						cout << "Puntos de la computadora: " << puntosCompu << endl;
+                               			cout << "Puntos de " << nombreJugador << ": " << puntosJugador << endl;
+						break;
+					}
+				}
+			}
+			else if(puntosJugador == 21)
+			{
+				cout << "\n¡Ha ganado " << nombreJugador << '!' << endl;
+				contJugador++;
+				cout << "Puntos de " << nombreJugador << ": " << puntosJugador << endl;
+				cout << "Puntos de la computadora: " << puntosCompu << endl;
+			}
+			else
+			{	
+				cout << "\n¡Ha ganado la computadora!" << endl;
+				contCompu++;
+				cout << "Puntos de la computadora: " << puntosCompu << endl;
+				cout << "Puntos de " << nombreJugador << ": " << puntosJugador << endl;
+			}
+		}
+		else if(op_menu == 2) // Ver Marcador
+		{
+		}
+		else if(op_menu == 3) { } // Salir
+		else
+			cout << "\nDebe ingresar una opcion valida." << endl;
+	} while(op_menu != 3);
 	
 	return 0;
 }
@@ -89,7 +315,7 @@ int main()
 int valor(string carta)
 {
 	if(carta[0] == 'A')
-		return 1;
+		return 11;
 	else if(carta[0] == '2')
 		return 2;
 	else if(carta[0] == '3')
