@@ -214,6 +214,7 @@ int main()
 					if(puntosJugador < 21)
 					{
 						cout << endl;
+						cout << nombreJugador << endl;
 						for(int i = 0; i < manoJugador.size(); i++) // Muestra la mano del jugador
 							cout << manoJugador[i] << endl;
 						cout << "Puntos: " << puntosJugador << endl;
@@ -227,6 +228,7 @@ int main()
 							manoJugador.push_back(deck[R]);
 							deck.erase(deck.begin() + R);
 							
+							puntosJugador = 0;
 							for(int i = 0; i < manoJugador.size(); i++)
 								puntosJugador += valor(manoJugador[i]);
 							
@@ -246,15 +248,161 @@ int main()
 						{
 							if(puntosJugador < 21) // Turno de la computadora
 							{
-								/* R = random(deck.size());
+								R = random(deck.size());
                         					manoCompu.push_back(deck[R]);
                         					deck.erase(deck.begin() + R);
 								
                         					R = random(deck.size());
                         					manoCompu.push_back(deck[R]);
-                        					deck.erase(deck.begin() + R); */
+                        					deck.erase(deck.begin() + R);
 								
+								for(int i = 0; i < manoCompu.size(); i++)
+									puntosCompu += valor(manoCompu[i]);
 								
+								bool B = false; // Validacion para la A de la computadora
+                        					for(int i = 0; i < manoCompu.size(); i++)
+                        					{
+                                					if((manoCompu[i])[0] == 'A')
+                                					{
+                                        					B = true;
+                                        					break;
+                                					}
+                        					}
+                        					if(B && puntosCompu > 21)
+                                					puntosCompu = puntosCompu - 10;
+								
+								if(puntosCompu < 21)
+								{
+									while(puntosJugador > puntosCompu)
+									{
+										// if(puntosCompu < 21)
+										// {
+											cout << endl;
+											cout << "Computadora" << endl;
+											for(int i = 0; i < manoCompu.size(); i++)
+												cout << manoCompu[i] << endl;
+											cout << "Puntos: " << puntosCompu << endl;
+											
+											R = random(deck.size());
+                                                                			manoCompu.push_back(deck[R]);
+                                                                			deck.erase(deck.begin() + R);
+											
+											puntosCompu = 0;
+											for(int i = 0; i < manoCompu.size(); i++)
+												puntosCompu += valor(manoCompu[i]);
+											
+											B = false;
+											for(int i = 0; i < manoCompu.size(); i++)
+                                                                			{
+                                                                        			if((manoCompu[i])[0] == 'A')
+                                                                        			{
+                                                                                			B = true;
+                                                                                			break;
+                                                                        			}
+                                                                			}
+                                                                			if(B && puntosCompu > 21)
+                                                                        			puntosCompu = puntosCompu - 10;
+											
+											// if(puntosCompu > puntosJugador)
+												// break;
+										// if(puntosCompu < 21)
+										// {
+										// }
+										if(puntosCompu == 21)
+										{
+											cout << "\n¡Ha ganado la computadora!" << endl;
+											contCompu++;
+											cout << "Puntos de la computadora: " << puntosCompu << endl;
+											cout << "Puntos de " << nombreJugador << ": " << puntosJugador << endl;
+											break;
+										}
+										else // puntosCompu > 21
+										{
+											cout << "\n¡Ha ganado " << nombreJugador << '!' << endl;
+											contJugador++;
+											cout << "Puntos de " << nombreJugador << ": " << puntosJugador << endl;
+											cout << "Puntos de la computadora: " << puntosCompu << endl;
+											break;
+										}
+									} // fin del while
+									
+									cout << endl << puntosJugador << endl;
+									cout << endl << puntosCompu << endl;
+									
+									if(puntosJugador < 21 && puntosCompu < 21)
+                                                                	{
+                                                                        	if(puntosJugador > puntosCompu)
+                                                                        	{
+                                                                                	cout << "\n¡Ha ganado " << nombreJugador << '!' << endl;
+                                                                                	contJugador++;
+                                                                                	cout << "Puntos de " << nombreJugador << ": " << puntosJugador << endl;
+                                                                                	cout << "Puntos de la computadora: " << puntosCompu << endl;
+											break;
+                                                                        	}
+                                                                        	else if(puntosCompu > puntosJugador)
+                                                                        	{
+                                                                                	cout << "\n¡Ha ganado la computadora!" << endl;
+                                                                                	contCompu++;
+                                                                                	cout << "Puntos de la computadora: " << puntosCompu << endl;
+                                                                                	cout << "Puntos de " << nombreJugador << ": " << puntosJugador << endl;
+											break;
+                                                                        	}
+                                                                        	else // empate
+                                                                        	{
+                                                                                	cout << "\n¡Ha habido un empate!" << endl;
+											break;
+                                                                     		}
+									}
+										
+								}
+								else if(puntosCompu == 21)
+								{
+									cout << "\n¡Ha ganado la computadora!" << endl;
+									contCompu++;
+									cout << "Puntos de la computadora: " << puntosCompu << endl;
+									cout << "Puntos de " << nombreJugador << ": " << puntosJugador << endl;
+									// break;
+								}
+								else
+								{
+									cout << "\n¡Ha ganado " << nombreJugador << '!' << endl;
+									contJugador++;
+									cout << "Puntos de " << nombreJugador << ": " << puntosJugador << endl;
+									cout << "Puntos de la computadora: " << puntosCompu << endl;
+									// break;
+								}
+								
+								/* if(puntosJugador < 21 && puntosCompu < 21)
+                        					{
+                                					// cout << "\nhola" << endl;
+                                					if(puntosJugador > puntosCompu)
+                                					{
+                                        					cout << "\n¡Ha ganado " << nombreJugador << '!' << endl;
+                                        					contJugador++;
+                                       						cout << "Puntos de " << nombreJugador << ": " << puntosJugador << endl;
+                                        					cout << "Puntos de la computadora: " << puntosCompu << endl;
+                                					}
+                                					else if(puntosCompu > puntosJugador)
+                                					{
+                                        					cout << "\n¡Ha ganado la computadora!" << endl;
+                                        					contCompu++;
+                                        					cout << "Puntos de la computadora: " << puntosCompu << endl;
+                                        					cout << "Puntos de " << nombreJugador << ": " << puntosJugador << endl;
+                                					}
+                                					else // empate
+                                					{
+                                        					cout << "\nEsto es insolito... ¡ha habido un empate!" << endl;
+                                					}
+                        					} */
+								
+							}
+							else if(puntosJugador == 21)
+							{
+								cout << "\n¡Ha ganado " << nombreJugador << '!' << endl;
+                                                		contJugador++;
+                                                		cout << "Puntos de " << nombreJugador << ": " << puntosJugador << endl;
+                                                		cout << "Puntos de la computadora: " << puntosCompu << endl;
+								break;
 							}
 							else
 							{
@@ -300,9 +448,37 @@ int main()
 				cout << "Puntos de la computadora: " << puntosCompu << endl;
 				cout << "Puntos de " << nombreJugador << ": " << puntosJugador << endl;
 			}
+			
+			/* // Ninguno de los dos llego a 21; gana el que tenga mas puntos
+			if(puntosJugador < 21 && puntosCompu < 21)
+			{
+				cout << "\nhola" << endl;
+				if(puntosJugador > puntosCompu)
+				{
+					cout << "\n¡Ha ganado " << nombreJugador << '!' << endl;
+                                	contJugador++;
+                                	cout << "Puntos de " << nombreJugador << ": " << puntosJugador << endl;
+                                	cout << "Puntos de la computadora: " << puntosCompu << endl;
+				}
+				else if(puntosCompu > puntosJugador)
+				{
+					cout << "\n¡Ha ganado la computadora!" << endl;
+                                	contCompu++;
+                                	cout << "Puntos de la computadora: " << puntosCompu << endl;
+                                	cout << "Puntos de " << nombreJugador << ": " << puntosJugador << endl;
+				}
+				else // empate
+				{
+					cout << "\nEsto es insolito... ¡ha habido un empate!" << endl;
+				}
+			} */
+			
 		}
 		else if(op_menu == 2) // Ver Marcador
 		{
+			cout << "\nPartidas Ganadas" << endl;
+			cout << "\t" << nombreJugador << ": " << contJugador << endl;
+			cout << "\tComputadora: " << contCompu << endl;
 		}
 		else if(op_menu == 3) { } // Salir
 		else
